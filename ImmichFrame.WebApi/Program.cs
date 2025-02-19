@@ -78,7 +78,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseStaticFiles();
+// Make app usable as subpage behind reverse proxy
+if (serverSettings is not null)
+{
+    if (serverSettings.Subpage is not null)
+    {
+        app.UseStaticFiles(serverSettings.Subpage);
+        app.UsePathBase(serverSettings.Subpage);
+    }
+}
+else
+{
+    app.UseStaticFiles();
+}
+
 if (app.Environment.IsProduction())
 {
     app.UseDefaultFiles();
