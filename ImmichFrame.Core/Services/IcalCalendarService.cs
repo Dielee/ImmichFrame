@@ -49,7 +49,7 @@ public class IcalCalendarService : ICalendarService
                 }
                 else
                 {
-                    throw new Exception("Failed to load calendar data");
+                    throw new Exception($"Failed to load calendar data (Status Code: {response.StatusCode}) from {httpUrl}, {await response.Content.ReadAsStringAsync()}");
                 }
             }
         }
