@@ -84,19 +84,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+if (clientSettings is not null && !string.IsNullOrEmpty(clientSettings.Subpage))
+{
+    app.UsePathBase($"/{clientSettings.Subpage}");
+}
+
 app.UseStaticFiles();
+
 if (app.Environment.IsProduction())
 {
     app.UseDefaultFiles();
-}
-
-if (app.Environment.IsDevelopment())
-{
-    var root = Directory.GetCurrentDirectory();
-    var dotenv = Path.Combine(root, "..", "docker", ".env");
-
-    dotenv = Path.GetFullPath(dotenv);
-    DotEnv.Load(dotenv);
 }
 
 // app.UseHttpsRedirection();
